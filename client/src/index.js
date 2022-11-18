@@ -5,7 +5,7 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { Route, Routes } from "react-router-dom"
-import Question from "./components/pages/Question";
+import Question from "./components/pages/Questions";
 import Content from "./components/pages/Content";
 import Header from "./components/pages/Header"
 import SideNavigation from "./components/pages/SideNav"

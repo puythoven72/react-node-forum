@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 function Question(props) {
     const [newQuestionData, setNewQuestionData] = useState("");
+    const [questionAnswers, setQuestionAnswers] = useState({});
     const navigate = useNavigate();
 
     function getQuestionInputData(e){
@@ -27,9 +28,7 @@ function Question(props) {
       };
 
     function handleAddQuestion(e) {
-    
         setNewQuestionData(e.target.value);
-      
       };
 
     return (
@@ -53,14 +52,6 @@ function Question(props) {
 
 
         </div>
-
-
-
-
-
-
-
-
 
     )
 

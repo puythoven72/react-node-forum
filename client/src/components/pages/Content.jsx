@@ -1,8 +1,8 @@
 import SideNav from "./SideNav";
 import { useEffect, useState } from 'react';
 import { Outlet, Link, NavLink } from "react-router-dom";
-import Question from "./Question";
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import Questions from "./Questions";
+import { BrowserRouter as Router, Routes, Route,Switch  } from 'react-router-dom';
 
 
 
@@ -12,29 +12,29 @@ function Content(props) {
 
     // useEffect(function () {
     //     const fetchData = async function () {
-    
+
     //         await fetch(`getQuestions?id=${props.currentCategoryID}`)
     //         .then(response => response.json())
     //         .then(data => {props.setAllQuestionByCategory(data) })
     //         .then(myJson => {
     //           console.log(JSON.stringify(myJson));
     //         });
-            
+
     //         alert(props.allQuestionsByCategory);
-    
+
     //     }
     //     fetchData();
-    
+
     //   }
     //     , []);
-    
-    
+
+
 
 
     // useEffect( async function () {
-        
+
     //     try {
-    
+
     //         alert("IM A RUNNIN")
     //         await fetch(`getQuestions?id=${props.currentCategoryID}`)
     //           .then(response => response.json())
@@ -42,9 +42,9 @@ function Content(props) {
     //           .then(myJson => {
     //             console.log(JSON.stringify(myJson));
     //           });
-               
-           
-            
+
+
+
     //       } catch (err) {
     //         console.log(err.message)
     //       }
@@ -60,9 +60,9 @@ function Content(props) {
     // const [backEndData, setBackEndData] = useState({});
     // const [newCategoryData, setNewCategoryData] = useState("");
 
-    const [questionId, setQuestionId] = useState('');
+  
 
-
+let currentCategoryID = props.currentCategoryID;
 
 
 
@@ -147,9 +147,10 @@ function Content(props) {
 
     return (
 
-    
+
         <div className="col-10">
             Current Category- {props.currentCategoryName}
+           
 
             {
                 (Object.keys(props.allQuestionsByCategory).length === 0) ? (<p>Loading....</p>) :
@@ -157,23 +158,26 @@ function Content(props) {
                         <div>
                             <ul>
                                 {props.allQuestionsByCategory.map(function (question, index) {
+                                    let questionId = question.id;
+                                    let questionString = question.question;
 
-                                    return <li>{question.question}</li>
+                                    return <li>  <NavLink to="/answers" state ={ {currentCategoryID:{currentCategoryID}, questionObj:{question}  }}>{questionString}</NavLink></li>
                                 })}
 
                             </ul>
-                           
+
                         </div>
                     )
 
-            }
-             <div className="row">
-                                <NavLink to="/newQuestion">Add Question</NavLink>
-                            </div>
+            } 
+            <div className="row">
+                <NavLink to="/newQuestion">Add Question</NavLink>
+            </div>
 
         </div>
-        
-   
+
+
+
     )
 
 }

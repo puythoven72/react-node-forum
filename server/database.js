@@ -42,8 +42,13 @@ export async function createQuestion(question,categoryID,createID) {
     return getCategory(id);
 };
 
+export async function getAnswersByQuestion(categoryId,questionId) {
+    console.log('do you get here');
+    const [rows] = await pool.query('SELECT * FROM answer where category = ? and question = ?',[categoryId,questionId]);
+    return rows;
+};
 
 
-
+// Insert into forum.answer (answer,category,question,createdby) values ("answer Test",1,2,15);
 //const categories = await createCategory("cat",2);
 //console.log(categories);

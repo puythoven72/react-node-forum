@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import Question from "./components/pages/Question";
+import Question from "./components/pages/Questions";
 import Content from "./components/pages/Content";
 
 

@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
            <SideNavigation handleClick = {props.handleClick} /> 
          
            
-           <Content currentCategoryName={props.currentCategoryName} allQuestionsByCategory = {props.allQuestionsByCategory} setAllQuestionByCategory={props.setAllQuestionByCategory}/>
+           <Content currentCategoryName={props.currentCategoryName} currentCategoryID = {props.currentCategoryID} allQuestionsByCategory = {props.allQuestionsByCategory} setAllQuestionByCategory={props.setAllQuestionByCategory}/>
            
         </div>
 
