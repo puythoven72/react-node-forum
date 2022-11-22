@@ -49,6 +49,13 @@ export async function getAnswersByQuestion(categoryId,questionId) {
 };
 
 
+export async function createAnswer(answer,categoryID,questionID,createID) {
+    const [result] = await pool.query(`Insert into answer (answer,category,question,createdby) values (?,?,?,?)`,[answer,categoryID,questionID,createID]);
+    const id = result.insertId;
+    return getCategory(id);
+};
+
+
 // Insert into forum.answer (answer,category,question,createdby) values ("answer Test",1,2,15);
 //const categories = await createCategory("cat",2);
 //console.log(categories);

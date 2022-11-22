@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 const port = 5000;
 import path from 'path';
 
-import { getCategories, getCategory, createCategory, getQuestionsByCategory,createQuestion,getAnswersByQuestion} from './database.js'
+import { getCategories, getCategory, createCategory, getQuestionsByCategory,createQuestion,getAnswersByQuestion,createAnswer} from './database.js'
 
 
 // configure the app to use bodyParser()
@@ -102,7 +102,16 @@ app.post('/addQuestion', async function (req, res) {
   
   });
   
-
+  app.post('/addAnswer', async function (req, res) {
+    console.log(req.body);
+    let newAnswer = req.body.answer;
+    let categoryID = req.body.categoryID;
+    let questionID = req.body.questionID;
+    console.log(categoryID + " is the id");
+    const question = await createAnswer(newAnswer,categoryID,questionID,7);
+  
+  });
+  
 
 
   

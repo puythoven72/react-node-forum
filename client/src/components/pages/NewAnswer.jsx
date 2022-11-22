@@ -1,30 +1,35 @@
 import SideNavigation from "./SideNav";
 import { useEffect, useState } from 'react';
-import { useLocation,NavLink } from 'react-router-dom';
+import { useLocation,NavLink,useNavigate } from 'react-router-dom';
 
 
 function NewAnswer(props){
   
     const [newAnswerData, setNewAnswerData] = useState("");
-
+    const navigate = useNavigate();
     let location =  useLocation();
     let categoryID = null;
     let questionID = null;
     let question = null;
+    let questionObj = null;
 
+    console.log(location.state.questionObj);
 
-    console.log(props.questionObj);
+    useEffect(function () {
+        if(location.state){
+            //     console.log(location.state.categoryID.categoryID);
+            //     console.log(location.state.questionID.questionID);
+                 categoryID = location.state.questionObj.category;         ;
+                 questionID = location.state.questionObj.id;
+                question =  location.state.questionObj.question;
+                question = location.state.questionObj;
+             }
+        });
+   
 
-    if(location.state){
-        console.log(location.state.categoryID.categoryID);
-        console.log(location.state.questionID.questionID);
-        categoryID = location.state.categoryID.categoryID;
-        questionID = location.state.questionID.questionID;
-        question =  location.state.question.question;
-    }
+    function postAnswerInputData(e){
+        e.preventDefault();
 
-    function getAnswerInputData(e){
-        e.preventDefault()
         fetch('/addAnswer', {
             method: 'POST',
             headers: {
@@ -37,7 +42,7 @@ function NewAnswer(props){
             }),
         })
             .then((res) => res.json())
-            // .then(navigate('/', {replace: true}), [navigate])
+             .then(navigate('/answers', { state: { currentCategoryID: {categoryID},questionObj:{question} } }))  
             
             .catch((err) => console.log('error'));
           
@@ -53,7 +58,7 @@ return(
             <div className="row">
                 <SideNavigation />
                 <div className="col">
-                    <form onSubmit={getAnswerInputData}>
+                    <form onSubmit={postAnswerInputData}>
 
                         <div className="form-group">
                             <label htmlFor="exampleFormControlTextarea1">{question}</label>
