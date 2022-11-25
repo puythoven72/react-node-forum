@@ -8,7 +8,7 @@ function Question(props) {
     const [questionAnswers, setQuestionAnswers] = useState({});
     const navigate = useNavigate();
 
-    function getQuestionInputData(e){
+    function getQuestionInputData(e) {
         e.preventDefault()
         fetch('/addQuestion', {
             method: 'POST',
@@ -17,40 +17,42 @@ function Question(props) {
             },
             body: JSON.stringify({
                 question: newQuestionData,
-                categoryID:props.currentCategoryID,
+                categoryID: props.currentCategory.id,
             }),
         })
             .then((res) => res.json())
-            // .then(navigate('/', {replace: true}), [navigate])
-            .then(props.handleClick(props.currentCategoryID,props.currentCategoryName))
+             .then(navigate('/', {replace: true}), [navigate])
+           // .then(props.handleClick(props.currentCategoryID, props.currentCategoryName))
             .catch((err) => console.log('error'));
-          
-      };
+
+    };
 
     function handleAddQuestion(e) {
         setNewQuestionData(e.target.value);
-      };
+    };
 
     return (
 
         <div className="container-fluid">
+
             <div className="row">
-                <SideNavigation handleClick={props.handleClick} />
+              
+            <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
+            
                 <div className="col">
-                    <form onSubmit={getQuestionInputData}>
+                  
+                    <div className="row">
+                        <form onSubmit={getQuestionInputData}>
 
-                        <div className="form-group">
-                            <label htmlFor="exampleFormControlTextarea1">{props.currentCategoryName}</label>
-                            <textarea className="form-control" name="newQuestion" value={newQuestionData} placeholder="Question" aria-label="Question" onChange={handleAddQuestion}  rows="3"></textarea>
-                        </div>
-                        <button type="submit">Add Question</button>
-                    </form>
-
+                            <div className="form-group">
+                                <label htmlFor="exampleFormControlTextarea1">{props.currentCategoryName}</label>
+                                <textarea className="form-control" name="newQuestion" value={newQuestionData} placeholder="Question" aria-label="Question" onChange={handleAddQuestion} rows="3"></textarea>
+                            </div>
+                            <button type="submit">Add Question</button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
-
-
         </div>
 
     )

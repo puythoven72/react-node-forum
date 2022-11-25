@@ -1,33 +1,17 @@
 import SideNavigation from "./SideNav";
-import { useEffect, useState } from 'react';
-import { useLocation,NavLink,useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
-function NewAnswer(props){
-  
+function NewAnswer(props) {
     const [newAnswerData, setNewAnswerData] = useState("");
     const navigate = useNavigate();
-    let location =  useLocation();
     let categoryID = null;
-    let questionID = null;
     let question = null;
-    let questionObj = null;
 
-    console.log(location.state.questionObj);
 
-    useEffect(function () {
-        if(location.state){
-            //     console.log(location.state.categoryID.categoryID);
-            //     console.log(location.state.questionID.questionID);
-                 categoryID = location.state.questionObj.category;         ;
-                 questionID = location.state.questionObj.id;
-                question =  location.state.questionObj.question;
-                question = location.state.questionObj;
-             }
-        });
-   
 
-    function postAnswerInputData(e){
+    function postAnswerInputData(e) {
         e.preventDefault();
 
         fetch('/addAnswer', {
@@ -37,48 +21,44 @@ function NewAnswer(props){
             },
             body: JSON.stringify({
                 answer: newAnswerData,
-                categoryID:categoryID,
-                questionID:questionID
+                categoryID: props.currentQuestion.category,
+                questionID: props.currentQuestion.id
             }),
         })
             .then((res) => res.json())
-             .then(navigate('/answers', { state: { currentCategoryID: {categoryID},questionObj:{question} } }))  
-            
+            .then(navigate('/answers'))
+
             .catch((err) => console.log('error'));
-          
-      };
+
+    };
 
     function handleAddAnswer(e) {
         setNewAnswerData(e.target.value);
-      };
+    };
 
-return(
+    return (
 
-<div className="container-fluid">
-            <div className="row">
-                <SideNavigation />
+        <div className="container-fluid">
+
+        <div className="row">
+          fff
+        <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
                 <div className="col">
-                    <form onSubmit={postAnswerInputData}>
+                    <div className="row">
+                        <form onSubmit={postAnswerInputData}>
 
-                        <div className="form-group">
-                            <label htmlFor="exampleFormControlTextarea1">{question}</label>
-                            <textarea className="form-control" name="newAnswer" value={newAnswerData} placeholder="Answer" aria-label="Answer" onChange={handleAddAnswer}  rows="3"></textarea>
-                        </div>
-                        <button type="submit">Add Answer</button>
-                    </form>
-
+                            <div className="form-group">
+                                <label htmlFor="exampleFormControlTextarea1">{props.currentQuestion.question}</label>
+                                <textarea className="form-control" name="newAnswer" value={newAnswerData} placeholder="Answer" aria-label="Answer" onChange={handleAddAnswer} rows="3"></textarea>
+                            </div>
+                            <button type="submit">Add Answer</button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
-
-
         </div>
-
-
-
-)
-
-
+    )
 }
 
 export default NewAnswer;

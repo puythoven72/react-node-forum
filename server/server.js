@@ -53,9 +53,7 @@ app.post('/addCatagories', async function (req, res) {
   console.log(req.body);
   let newCategory = req.body.category;
   const categories = await createCategory(newCategory, 8);
-  //  res.send(categories);
-  // console.log('success calls');
-  // res.json({"users":["userOne","userTwo","userThree"]});
+  
 
 });
 
@@ -92,6 +90,7 @@ app.post('/addQuestion', async function (req, res) {
     
       let categoryId = req.query.catId;
       let questionId = req.query.quesId;
+      console.log("Get Anwswers " + categoryId + " " + questionId);
       const answers = await getAnswersByQuestion(categoryId,questionId);
       console.log(answers);
       res.send(answers);

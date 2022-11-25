@@ -45,6 +45,7 @@ export async function createQuestion(question,categoryID,createID) {
 export async function getAnswersByQuestion(categoryId,questionId) {
     console.log('do you get here');
     const [rows] = await pool.query('SELECT * FROM answer where category = ? and question = ?',[categoryId,questionId]);
+    console.log(rows + ' xxx xxx')
     return rows;
 };
 

@@ -1,42 +1,69 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 function SideNavigation(props) {
 
   const [backEndData, setBackEndData] = useState({});
   const [newCategoryData, setNewCategoryData] = useState("");
 
+  const [currentCategoryName, setCurrentCategoryName] = useState('');
+
+  const [currentCategoryID, setCurrentCategoryID] = useState('');
+
+
+  const navigate = useNavigate();
+
   useEffect(function () {
     fetch("/api")
-        .then(response => response.json())
-        .then(data => { setBackEndData(data) })
-}, [newCategoryData]);
+      .then(response => response.json())
+      .then(data => { setBackEndData(data) })
+  }, [newCategoryData]);
 
-function handleAddCategory(e) {
-  setNewCategoryData(e.target.value)
+  function handleAddCategory(e) {
+    setNewCategoryData(e.target.value)
 
-};
+  };
 
-function getCategoryInputData(e) {
-  e.preventDefault()
-  fetch('/addCatagories', {
+  function getCategoryInputData(e) {
+    e.preventDefault()
+    fetch('/addCatagories', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-          category: newCategoryData,
+        category: newCategoryData,
       }),
-  })
+    })
       .then((res) => res.json())
       // .then((result) => setData(result.rows))
       .catch((err) => console.log('error'));
-  setNewCategoryData('')
-};
+    setNewCategoryData('')
+  };
+
+  //const handleClick = async (id, name) => {
+  const handleClick = async (category) => {
+    try {
+      props.setCurrentCategory(category);
+     
+      await fetch(`getQuestions?id=${category.id}`)
+        .then(response => response.json())
+        // .then(data => { setAllQuestionByCategory(data) })
+        .then(data => { props.setAllQuestionByCategory(data) })
+        .then(navigate('/', { replace: true }), [navigate])
+        .then(myJson => {
+          
+        });
+
+
+
+    } catch (err) {
+      console.log(err.message)
+    }
+  };
 
 
 
 
-
- 
 
 
 
@@ -49,7 +76,7 @@ function getCategoryInputData(e) {
       <form onSubmit={getCategoryInputData}>
         <input className="form-control" name="newCategory" value={newCategoryData} placeholder="Category" aria-label="Category" onChange={handleAddCategory} />
         <button type="submit"  >Add Category</button>
-        {/* <button type="submit" className="btn btn-primary   " id="addCategory" onClick={props.addCategory}>Add Category</button> */}
+
 
       </form>
 
@@ -62,9 +89,10 @@ function getCategoryInputData(e) {
           (
 
             backEndData.map(function (category, index) {
-              return( <div>
 
-                 <button type='button' onClick={() => props.handleClick(category.id,category.name)} key={category.id}>{category.name} </button> 
+              return (<div>
+
+              <button type='button' onClick={() => handleClick(category)} key={category.id}>{category.name} </button> 
               </div>
               )
 
