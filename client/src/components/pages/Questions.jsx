@@ -45,7 +45,7 @@ function Question(props) {
                         <form onSubmit={getQuestionInputData}>
 
                             <div className="form-group">
-                                <label htmlFor="exampleFormControlTextarea1">{props.currentCategoryName}</label>
+                                <label htmlFor="newQuestion">{props.currentCategory.name}</label>
                                 <textarea className="form-control" name="newQuestion" value={newQuestionData} placeholder="Question" aria-label="Question" onChange={handleAddQuestion} rows="3"></textarea>
                             </div>
                             <button type="submit">Add Question</button>

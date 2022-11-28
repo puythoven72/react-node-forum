@@ -7,6 +7,7 @@ function Answers(props) {
     let location = useLocation();
 
     const [answerData, setAnswerData] = useState({});
+    const [dataPopulated,setDataPopulated] = useState(false);
     // const [questionObj, setQuestionObj] = useState({});
 
 
@@ -24,14 +25,26 @@ function Answers(props) {
 
             props.setCurrentQuestion(location.state.questionObj.question);
 
-            await fetch(`getAnswers?catId=${props.currentCategory.id}&quesId=${quesid}`)
-                .then(response => response.json())
-
-                .then(data => { setAnswerData(data) });
+            
 
         }
-        else { console.log('no state') }
-    }, []);
+        // else if(props.currentQuestion.length != 0) { 
+        //     console.log(JSON.stringify(props.currentQuestion)+' no state' ) ;
+        //     await fetch(`getAnswers?catId=${props.currentCategory.id}&quesId=${props.currentQuestion.id}`)
+        //     .then(response => response.json())
+
+        //     .then(data => { setAnswerData(data) });
+        
+        
+        // }
+        console.log(JSON.stringify(props.currentQuestion) + " current qustion")
+        await fetch(`getAnswers?catId=${props.currentCategory.id}&quesId=${props.currentQuestion.id}`)
+                .then(response => response.json())
+                .then(data => { setAnswerData(data) })
+        if(answerData){
+            setDataPopulated(true);
+        }        
+    }, [dataPopulated]);
 
 
 
@@ -40,6 +53,7 @@ function Answers(props) {
             <div className='row'>
             <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
             <div className="col">
+                <div>Question- {props.currentQuestion.question}</div>
                 {
                     (Object.keys(answerData).length === 0) ? (<p>Loading....</p>) :
                         (
@@ -53,12 +67,9 @@ function Answers(props) {
                         )
                 }
                 <div>
-
                     <NavLink to="/newAnswers" >Add Answer</NavLink>
                 </div>
-
             </div>
-
             </div>
         </div>
     )

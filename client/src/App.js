@@ -66,7 +66,7 @@ function App() {
           <Routes>
             {/* <Route path = "/" element= {<Home allQuestionsByCategory={allQuestionsByCategory} setAllQuestionByCategory={setAllQuestionByCategory} handleClick={handleClick} currentCategoryName={currentCategoryName} currentCategoryID={currentCategoryID}currentCategory ={currentCategory} setCurrentCategory={setCurrentCategory} />} /> */}
             <Route path = "/" element= {<Home currentCategory ={currentCategory} setCurrentCategory={setCurrentCategory} />} />
-            <Route path = "/newQuestion" element= {<Question setCurrentCategory={setCurrentCategory} />}/>
+            <Route path = "/newQuestion" element= {<Question setCurrentCategory={setCurrentCategory}  currentCategory ={currentCategory}/>}/>
             <Route path = "/answers" element= {<Answers setCurrentCategory={setCurrentCategory} currentCategory ={currentCategory} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} setCurrentAnswer={setCurrentAnswer} currentAnswer={currentAnswer} />}/>
             <Route path = "/newAnswers" element= {<NewAnswer setCurrentCategory={setCurrentCategory} currentQuestion={currentQuestion}/>}/> 
             {/* <Route path = "/newQuestion" element= {<Question allQuestionsByCategory={allQuestionsByCategory} handleClick={handleClick} currentCategoryName={currentCategoryName} currentCategoryID={currentCategoryID} />} />

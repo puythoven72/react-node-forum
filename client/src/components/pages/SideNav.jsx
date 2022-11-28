@@ -9,14 +9,21 @@ function SideNavigation(props) {
 
   const [currentCategoryID, setCurrentCategoryID] = useState('');
 
-
+  const [addedCategory, setAddedCategory] = useState('');
   const navigate = useNavigate();
 
-  useEffect(function () {
-    fetch("/api")
+  useEffect(() => { getCategories() }, [addedCategory,newCategoryData]);
+
+
+
+
+  async function getCategories() {
+    await fetch("/api")
       .then(response => response.json())
       .then(data => { setBackEndData(data) })
-  }, [newCategoryData]);
+
+  }
+
 
   function handleAddCategory(e) {
     setNewCategoryData(e.target.value)
@@ -35,26 +42,28 @@ function SideNavigation(props) {
       }),
     })
       .then((res) => res.json())
+      .then(setAddedCategory(newCategoryData))
+      .then(getCategories())
+      .then(setNewCategoryData(''))
       // .then((result) => setData(result.rows))
       .catch((err) => console.log('error'));
-    setNewCategoryData('')
+
+
   };
 
   //const handleClick = async (id, name) => {
-  const handleClick = async (category) => {
+  const handleClick = (category) => {
     try {
       props.setCurrentCategory(category);
-     
-      await fetch(`getQuestions?id=${category.id}`)
-        .then(response => response.json())
-        // .then(data => { setAllQuestionByCategory(data) })
-        .then(data => { props.setAllQuestionByCategory(data) })
-        .then(navigate('/', { replace: true }), [navigate])
-        .then(myJson => {
-          
-        });
+      navigate('/');
+      // await fetch(`getQuestions?id=${category.id}`)
+      //   .then(response => response.json())
+      //   // .then(data => { setAllQuestionByCategory(data) })
+      //   .then(data => { props.setAllQuestionByCategory(data) })
+      //   .then(navigate('/', { replace: true }), [navigate])
+      //   .then(myJson => {
 
-
+      //   });
 
     } catch (err) {
       console.log(err.message)
@@ -81,7 +90,7 @@ function SideNavigation(props) {
       </form>
 
 
-
+      {addedCategory}
 
 
       {
@@ -92,7 +101,7 @@ function SideNavigation(props) {
 
               return (<div>
 
-              <button type='button' onClick={() => handleClick(category)} key={category.id}>{category.name} </button> 
+                <button type='button' onClick={() => handleClick(category)} key={category.id}>{category.name} </button>
               </div>
               )
 
