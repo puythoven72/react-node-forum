@@ -31,7 +31,7 @@ function SideNavigation(props) {
   };
 
   function getCategoryInputData(e) {
-    e.preventDefault()
+    e.preventDefault();
     fetch('/addCatagories', {
       method: 'POST',
       headers: {

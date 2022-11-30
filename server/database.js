@@ -56,6 +56,33 @@ export async function createAnswer(answer,categoryID,questionID,createID) {
     return getCategory(id);
 };
 
+export async function checkUserName(username) {
+    const [result] = await pool.query(`SELECT username FROM users Where username  = ?`,[username]); 
+    console.log(result);
+    if(result.length > 0){
+        return true;
+    }
+    return false;
+};
+
+export async function registerUser(username,password,firstname,lastname) {
+    const [result] = await pool.query(`Insert into forum.users (username,password,firstname,lastname) values(?,?,?,?)`,[username,password,firstname,lastname]);
+   
+    return result;
+};
+
+
+export async function getUserLogin(username,password) {
+    const [result] = await pool.query(`SELECT id,username,firstName,lastName FROM users Where username  = ?  and BINARY password = ?`,[username,password]);  
+    console.log(result);
+    return result;
+
+};
+
+
+
+
+
 
 // Insert into forum.answer (answer,category,question,createdby) values ("answer Test",1,2,15);
 //const categories = await createCategory("cat",2);

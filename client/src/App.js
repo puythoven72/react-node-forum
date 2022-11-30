@@ -12,7 +12,8 @@ import Content from './components/pages/Content';
 import Question from './components/pages/Questions';
 import Answers from './components/pages/Answers';
 import NewAnswer from './components/pages/NewAnswer';
-
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
 
 function App() {
 
@@ -26,6 +27,39 @@ function App() {
   const [currentCategoryID, setCurrentCategoryID] = useState('');
 
   const navigate = useNavigate();
+
+
+  // const [userName, setUserName] = useState('');
+  // const [password,setPassword] = useState('');
+
+   const [userData,setUserData] = useState({});
+  const [regUserName, setRegUserName] = useState('');
+  const [regPassword,setRegPassword] = useState('');
+
+  const [regFirstName, setRegFirstName] = useState('');
+  const [regLastName,setRegLastName] = useState('');
+
+
+  
+  if(JSON.stringify(userData).length ==0) {
+    console.log("TRUE");
+  }
+    console.log(JSON.stringify(userData)+ " first") ;
+    if(Object.keys(userData).length === 0 || Object.keys(userData.userData).length === 0  ) {
+
+    return(
+      <>
+      <Routes>
+      <Route path="/" element={ <Login setUserData = {setUserData} userData={userData} />} />
+        <Route path="/register" element={<Register regPassword={regPassword} setRegPassword={setRegPassword} regUserName={regUserName} setRegUserName={setRegUserName} setRegLastName={setRegLastName} setRegFirstName={setRegFirstName} regFirstName={regFirstName} regLastName={regLastName}/>} />
+        {/* <Route path="/Login" element={ <Login userName={userName} password = {password}  setUserName = {setUserName} setPassword={setPassword} />} /> */}
+      </Routes> 
+   
+    </>
+    
+
+    )
+  }
 
 
 
@@ -63,12 +97,13 @@ function App() {
       <div className='container-fluid'>
         <div className='row'>
 
-          <Routes>
+          <Routes> 
             {/* <Route path = "/" element= {<Home allQuestionsByCategory={allQuestionsByCategory} setAllQuestionByCategory={setAllQuestionByCategory} handleClick={handleClick} currentCategoryName={currentCategoryName} currentCategoryID={currentCategoryID}currentCategory ={currentCategory} setCurrentCategory={setCurrentCategory} />} /> */}
-            <Route path = "/" element= {<Home currentCategory ={currentCategory} setCurrentCategory={setCurrentCategory} />} />
-            <Route path = "/newQuestion" element= {<Question setCurrentCategory={setCurrentCategory}  currentCategory ={currentCategory}/>}/>
+            <Route path = "/" element= {<Home currentCategory ={currentCategory} setCurrentCategory={setCurrentCategory} userData={userData} />} />
+            <Route path = "/newQuestion" element= {<Question setCurrentCategory={setCurrentCategory}  currentCategory ={currentCategory} userData={userData}/>}/>
             <Route path = "/answers" element= {<Answers setCurrentCategory={setCurrentCategory} currentCategory ={currentCategory} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} setCurrentAnswer={setCurrentAnswer} currentAnswer={currentAnswer} />}/>
             <Route path = "/newAnswers" element= {<NewAnswer setCurrentCategory={setCurrentCategory} currentQuestion={currentQuestion}/>}/> 
+            
             {/* <Route path = "/newQuestion" element= {<Question allQuestionsByCategory={allQuestionsByCategory} handleClick={handleClick} currentCategoryName={currentCategoryName} currentCategoryID={currentCategoryID} />} />
             <Route path = "/answers" element= {<Answers/>}/>
             <Route path = "/newAnswers" element= {<NewAnswer/>}/> 
