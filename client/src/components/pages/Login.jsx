@@ -9,7 +9,7 @@ function Login(props) {
 
 
     function loginUser(e) {
-        e.preventDefault();
+        //e.preventDefault();
         setloginMessage('');
         fetch('/loginUser', {
           method: 'POST',
@@ -22,7 +22,7 @@ function Login(props) {
           }),
         })
           .then((res) => res.json()
-          .then(data => { props.setUserData(data) })
+          .then(data => {  localStorage.setItem('userData',JSON.stringify( data)) })
           )
           .catch((err) => console.log('error ' + err));
        
@@ -45,7 +45,7 @@ function Login(props) {
                     <button type="submit">Submit</button>
                 </div>
             </form>
-            {props.userData[0]}
+            
             <div>
             
             <NavLink to="/register" >Register</NavLink>

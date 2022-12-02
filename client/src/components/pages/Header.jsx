@@ -2,6 +2,13 @@
 function Header() {
 
 
+    const loggedInUserData = localStorage.getItem("userData");
+    let userFirstName = "";
+    if (loggedInUserData !== null) {
+        alert(JSON.parse(loggedInUserData).userData[0].firstName);
+         userFirstName = JSON.parse(loggedInUserData).userData[0].firstName;
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <a className="navbar-brand" href="#">Navbar w/ text</a>
@@ -23,6 +30,9 @@ function Header() {
                 <span className="navbar-text">
                     Navbar text with an inline element
                 </span>
+            </div>
+            <div>
+                Welcome {userFirstName}
             </div>
         </nav>
     )

@@ -5,9 +5,11 @@ import SideNavigation from  './SideNav';
 
  function Home(props) {
 
-console.log(JSON.stringify(props.userData) + "cc")
-   
-console.log(props.userData.userData[0].id + "cc")
+const loggedInUserData = localStorage.getItem("userData");
+if(loggedInUserData !== null){
+    alert(loggedInUserData);
+}
+
 
    
     return (
@@ -16,7 +18,7 @@ console.log(props.userData.userData[0].id + "cc")
             
         <div className="row">
            <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
-            <Content currentCategory ={props.currentCategory}  /> 
+            <Content currentCategory ={props.currentCategory}   /> 
            
         </div>
 

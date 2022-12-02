@@ -1,10 +1,10 @@
 import SideNav from "./SideNav";
 import { useEffect, useState } from 'react';
 import { Outlet, Link, NavLink } from "react-router-dom";
-import Questions from "./Questions";
+//import Questions from "./Questions";
 import { BrowserRouter as Router, Routes, Route,Switch  } from 'react-router-dom';
 
-
+import Question from "../Question"
 
 
 function Content(props) {
@@ -31,23 +31,36 @@ function Content(props) {
                 (Object.keys(allQuestionsByCategory).length === 0) ? (<p>Loading....</p>) :
                     (
                         <div>
-                            <ul>
+                            {/* <ul> */}
                                 {allQuestionsByCategory.map(function (question, index) {
-                                    let questionId = question.id;
-                                    let questionString = question.question;
-                                      return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
+                                  
+                                        return(<Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />)
+                                    //   return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
 
                                 })}
 
-                            </ul>
+                            {/* </ul> */}
+                           
 
                         </div>
                     )
 
+                    
+
             } 
-            <div className="row">
-                <NavLink to="/newQuestion">Add Question</NavLink>
-            </div>
+            {
+                props.currentCategory ?
+                (
+                    <div className="row">
+                    <NavLink to="/newQuestion">Add Question</NavLink> 
+                    </div>
+                ) :
+                (null)
+
+            }
+         
+            
+           
 
         </div>
 

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import {getLocalUserData} from '../utility.js';
+
 function SideNavigation(props) {
 
   const [backEndData, setBackEndData] = useState({});
@@ -12,9 +14,10 @@ function SideNavigation(props) {
   const [addedCategory, setAddedCategory] = useState('');
   const navigate = useNavigate();
 
+
   useEffect(() => { getCategories() }, [addedCategory,newCategoryData]);
 
-
+ // const loggedInUserData = localStorage.getItem("userData");
 
 
   async function getCategories() {
@@ -32,6 +35,13 @@ function SideNavigation(props) {
 
   function getCategoryInputData(e) {
     e.preventDefault();
+    let userId = null;
+    let userStoredData = getLocalUserData();
+    if (userStoredData !== null  && newCategoryData !=='' ) {
+      
+         userId = userStoredData.id;
+    
+
     fetch('/addCatagories', {
       method: 'POST',
       headers: {
@@ -39,6 +49,7 @@ function SideNavigation(props) {
       },
       body: JSON.stringify({
         category: newCategoryData,
+        userID: userId
       }),
     })
       .then((res) => res.json())
@@ -48,7 +59,7 @@ function SideNavigation(props) {
       // .then((result) => setData(result.rows))
       .catch((err) => console.log('error'));
 
-
+  }
   };
 
   //const handleClick = async (id, name) => {

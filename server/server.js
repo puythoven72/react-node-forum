@@ -17,6 +17,8 @@ app.use(bodyParser.json());
 
 
 
+
+
 // var con = mysql.createConnection({
 //     host: "localhost",
 //     user: "root",
@@ -101,7 +103,8 @@ app.get('/api', async function (req, res) {
 app.post('/addCatagories', async function (req, res) {
   console.log(req.body);
   let newCategory = req.body.category;
-  const categories = await createCategory(newCategory, 8);
+  let userID = parseInt( req.body.userID);
+  const categories = await createCategory(newCategory, userID);
 });
 
 
@@ -125,9 +128,10 @@ app.post('/addQuestion', async function (req, res) {
   console.log(req.body);
   let newQuestion = req.body.question;
   let categoryID = req.body.categoryID;
+  let createrID = parseInt( req.body.userID);
 
   console.log(categoryID + " is the id");
-  const question = await createQuestion(newQuestion, categoryID, 7);
+  const question = await createQuestion(newQuestion, categoryID, createrID);
 
 });
 

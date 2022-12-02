@@ -21,9 +21,9 @@ function Answers(props) {
         if (location.state) {
             console.log(location.state);
             // let catid = location.state.questionObj.question.category;
-            let quesid = location.state.questionObj.question.id;
+            let quesid = location.state.questionObj.questionObj.question.id;
 
-            props.setCurrentQuestion(location.state.questionObj.question);
+            props.setCurrentQuestion(location.state.questionObj.questionObj);
 
             
 
@@ -37,7 +37,7 @@ function Answers(props) {
         
         
         // }
-        console.log(JSON.stringify(props.currentQuestion) + " current qustion")
+        console.log(JSON.stringify(props.currentQuestion.question) + " current qustion")
         await fetch(`getAnswers?catId=${props.currentCategory.id}&quesId=${props.currentQuestion.id}`)
                 .then(response => response.json())
                 .then(data => { setAnswerData(data) })

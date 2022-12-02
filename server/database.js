@@ -32,7 +32,8 @@ export async function createCategory(name,createID,) {
 
 
 export async function getQuestionsByCategory(categoryId) {
-    const [rows] = await pool.query('Select * from question Where category = ?',[categoryId]);
+    const [rows] = await pool.query( `Select question.id,question.question,question.category,question.createdby,question.created,users.firstname,users.lastname from question 
+    Left JOIN users ON question.createdby=users.id where question.category = ?`,[categoryId]);
     return rows;
 };
 

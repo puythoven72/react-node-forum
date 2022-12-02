@@ -1,15 +1,20 @@
 import SideNavigation from "./SideNav";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import {getLocalUserData} from '../utility.js';
 
 
-function Question(props) {
+function NewQuestion(props) {
     const [newQuestionData, setNewQuestionData] = useState("");
     const [questionAnswers, setQuestionAnswers] = useState({});
     const navigate = useNavigate();
 
     function getQuestionInputData(e) {
         e.preventDefault()
+        let userStoredData = getLocalUserData();
+        if (userStoredData !== null  && newQuestionData !=='' ) {
+           let userId = userStoredData.id;
+
         fetch('/addQuestion', {
             method: 'POST',
             headers: {
@@ -18,13 +23,14 @@ function Question(props) {
             body: JSON.stringify({
                 question: newQuestionData,
                 categoryID: props.currentCategory.id,
+                userID: userId
             }),
         })
             .then((res) => res.json())
              .then(navigate('/', {replace: true}), [navigate])
            // .then(props.handleClick(props.currentCategoryID, props.currentCategoryName))
             .catch((err) => console.log('error'));
-
+    }
     };
 
     function handleAddQuestion(e) {
@@ -42,14 +48,14 @@ function Question(props) {
                 <div className="col">
                   
                     <div className="row">
-                        <form onSubmit={getQuestionInputData}>
+                         <form onSubmit={getQuestionInputData}>
 
                             <div className="form-group">
                                 <label htmlFor="newQuestion">{props.currentCategory.name}</label>
                                 <textarea className="form-control" name="newQuestion" value={newQuestionData} placeholder="Question" aria-label="Question" onChange={handleAddQuestion} rows="3"></textarea>
                             </div>
                             <button type="submit">Add Question</button>
-                        </form>
+                        </form> 
                     </div>
                 </div>
             </div>
@@ -60,4 +66,4 @@ function Question(props) {
 
 }
 
-export default Question;
+export default NewQuestion;
