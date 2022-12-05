@@ -1,12 +1,25 @@
 
+import { useEffect, useState } from 'react';
 function Header() {
+    const [userFullName, setUserFullName] = useState("");
+    useEffect(() => { checkUser(); }, []);
 
-
+    function checkUser(){
     const loggedInUserData = localStorage.getItem("userData");
-    let userFirstName = "";
+  
     if (loggedInUserData !== null) {
         alert(JSON.parse(loggedInUserData).userData[0].firstName);
-         userFirstName = JSON.parse(loggedInUserData).userData[0].firstName;
+        let firstName = JSON.parse(loggedInUserData).userData[0].firstName;
+        let lastName = JSON.parse(loggedInUserData).userData[0].lastName
+        setUserFullName(`${firstName} ${lastName}` );
+         document.getElementById('logout').style.display='block';
+    }else{
+        document.getElementById('logout').style.display='none';
+    }
+}
+    function logout(){
+        localStorage.clear();
+      
     }
 
     return (
@@ -31,8 +44,9 @@ function Header() {
                     Navbar text with an inline element
                 </span>
             </div>
-            <div>
-                Welcome {userFirstName}
+            <div className="logout" id="logout">
+                Welcome {userFullName}
+                <div><a  href="/" onClick={logout}>logout</a></div>
             </div>
         </nav>
     )

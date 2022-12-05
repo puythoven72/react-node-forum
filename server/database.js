@@ -44,9 +44,9 @@ export async function createQuestion(question,categoryID,createID) {
 };
 
 export async function getAnswersByQuestion(categoryId,questionId) {
-    console.log('do you get here');
-    const [rows] = await pool.query('SELECT * FROM answer where category = ? and question = ?',[categoryId,questionId]);
-    console.log(rows + ' xxx xxx')
+    const [rows] = await pool.query(`SELECT answer.id,answer.answer,answer.category,answer.question,answer.createdby,answer.created, users.firstname,users.lastname FROM answer 
+    left  join users ON answer.createdby=users.id
+    where category = ? and question = ?`,[categoryId,questionId]);
     return rows;
 };
 

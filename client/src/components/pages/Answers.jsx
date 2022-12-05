@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import SideNavigation from './SideNav';
+import Answer from './Answer';
 
 function Answers(props) {
 
@@ -58,11 +59,16 @@ function Answers(props) {
                     (Object.keys(answerData).length === 0) ? (<p>Loading....</p>) :
                         (
                             <div>
-                                <ul>
+                                 {/* <ul> */}
                                     {answerData.map(function (answer, index) {
-                                        return <li>  {answer.answer}</li>
+                                        // return <li>  {answer.answer}</li>
+                                        return (<Answer answer={answer} />)
+
                                     })}
-                                </ul>
+                                {/* </ul>  */}
+
+                            
+
                             </div>
                         )
                 }
