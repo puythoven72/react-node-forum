@@ -76,7 +76,10 @@ export async function registerUser(username,password,firstname,lastname) {
 export async function getUserLogin(username,password) {
     const [result] = await pool.query(`SELECT id,username,firstName,lastName FROM users Where username  = ?  and BINARY password = ?`,[username,password]);  
     console.log(result);
-    return result;
+    if(result){
+        return result;
+    }
+    return null;
 
 };
 

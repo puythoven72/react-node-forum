@@ -10,11 +10,8 @@ function Answer(props){
 return (
 
 
-    
-
-
     <div class="card">
-             <div class="card-header">
+             <div class="card-header bg-secondary text-white">
                     <div>Answer By: {props.answer.firstname} {props.answer.lastname}</div>
                 </div>
                 <div class="card-body">
@@ -22,8 +19,6 @@ return (
                     <p class="card-text">On: {answerDte}</p>
                 </div>   
     </div>
-
-
 )
 
 }

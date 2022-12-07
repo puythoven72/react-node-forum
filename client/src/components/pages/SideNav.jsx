@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import {getLocalUserData} from '../utility.js';
+import { getLocalUserData } from '../utility.js';
 
 function SideNavigation(props) {
 
@@ -15,9 +15,9 @@ function SideNavigation(props) {
   const navigate = useNavigate();
 
 
-  useEffect(() => { getCategories() }, [addedCategory,newCategoryData]);
+  useEffect(() => { getCategories() }, [addedCategory, newCategoryData]);
 
- // const loggedInUserData = localStorage.getItem("userData");
+  // const loggedInUserData = localStorage.getItem("userData");
 
 
   async function getCategories() {
@@ -37,33 +37,34 @@ function SideNavigation(props) {
     e.preventDefault();
     let userId = null;
     let userStoredData = getLocalUserData();
-    if (userStoredData !== null  && newCategoryData !=='' ) {
-      
-         userId = userStoredData.id;
-    
+    if (userStoredData !== null && newCategoryData !== '') {
 
-    fetch('/addCatagories', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        category: newCategoryData,
-        userID: userId
-      }),
-    })
-      .then((res) => res.json())
-      .then(setAddedCategory(newCategoryData))
-      .then(getCategories())
-      .then(setNewCategoryData(''))
-      // .then((result) => setData(result.rows))
-      .catch((err) => console.log('error'));
+      userId = userStoredData.id;
 
-  }
+
+      fetch('/addCatagories', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category: newCategoryData,
+          userID: userId
+        }),
+      })
+        .then((res) => res.json())
+        .then(setAddedCategory(newCategoryData))
+        .then(getCategories())
+        .then(setNewCategoryData(''))
+        // .then((result) => setData(result.rows))
+        .catch((err) => console.log('error'));
+
+    }
   };
 
   //const handleClick = async (id, name) => {
   const handleClick = (category) => {
+    alert("in " + category)
     try {
       props.setCurrentCategory(category);
       navigate('/');
@@ -91,39 +92,47 @@ function SideNavigation(props) {
 
 
 
-    <div className="col-2">
+    <div className="col-2 g-3  " >
 
       <form onSubmit={getCategoryInputData}>
-        <input className="form-control" name="newCategory" value={newCategoryData} placeholder="Category" aria-label="Category" onChange={handleAddCategory} />
-        <button type="submit"  >Add Category</button>
-
+        <div className="form-group border border-secondary rounded p-2">
+          <div className='row '>
+            <div className='col mb-1'>
+              <input type="text" className="form-control" name="newCategory" value={newCategoryData} placeholder="Category" aria-label="Category" onChange={handleAddCategory} />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col text-center'>
+              <button type="submit" className="btn btn-secondary">Add Category</button>
+            </div>
+          </div>
+        </div>
 
       </form>
 
 
-      {addedCategory}
 
 
-      {
-        (Object.keys(backEndData).length === 0) ? (<p>Loading....</p>) :
-          (
+      <div className="list-group mt-2 border border-secondary rounded p-0">
 
-            backEndData.map(function (category, index) {
+        {
+          (Object.keys(backEndData).length === 0) ? (<p>Loading....</p>) :
+            (
 
-              return (<div>
+              backEndData.map(function (category, index) {
 
-                <button type='button' onClick={() => handleClick(category)} key={category.id}>{category.name} </button>
-              </div>
-              )
+                return (<div>
+                  {/* <li className="list-group-item" key={category.id}><a href='#' onClick={() => handleClick(category)}>{category.name}</a></li> */}
+                  {/* <button type="button" className="list-group-item list-group-item-action" onClick={() => handleClick(category)}>A second item</button> */}
 
+                  <button type='button' className="list-group-item list-group-item-action list-group-item-primary" onClick={() => handleClick(category)} key={category.id}>{category.name} </button>
+                </div>
+                )
+              })
+            )
+        }
 
-            })
-
-
-
-          )
-
-      }
+      </div>
 
     </div>
 

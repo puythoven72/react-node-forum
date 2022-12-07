@@ -1,9 +1,6 @@
-import SideNav from "./SideNav";
-import { useEffect, useState } from 'react';
-import { Outlet, Link, NavLink } from "react-router-dom";
-//import Questions from "./Questions";
-import { BrowserRouter as Router, Routes, Route,Switch  } from 'react-router-dom';
 
+import { useEffect, useState } from 'react';
+import { NavLink } from "react-router-dom";
 import Question from "../Question"
 
 
@@ -13,54 +10,55 @@ function Content(props) {
 
     useEffect(async function () {
         await fetch(`getQuestions?id=${props.currentCategory.id}`)
-          .then(response => response.json())
-          .then(data => { setAllQuestionByCategory(data) })
-      }, [props.currentCategory]);
-
-   
-
+            .then(response => response.json())
+            .then(data => { setAllQuestionByCategory(data) })
+    }, [props.currentCategory]);
 
     return (
 
 
-        <div className="col-10">
-            Current Category- {props.currentCategory.name}
-           
+        <div className="col-10 g-3 border border-secondary rounded p-1">
 
             {
-                (Object.keys(allQuestionsByCategory).length === 0) ? (<p>Loading....</p>) :
+                (Object.keys(allQuestionsByCategory).length === 0) ? (<h4 className='text-center'>Select A Category, And Add A Question</h4>) :
                     (
                         <div>
+                            <h5 className='text-center'> Current Category-{props.currentCategory.name}</h5>
                             {/* <ul> */}
-                                {allQuestionsByCategory.map(function (question, index) {
-                                  
-                                        return(<Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />)
-                                    //   return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
+                            {allQuestionsByCategory.map(function (question, index) {
 
-                                })}
+                                return (<Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />)
+                                //   return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
+
+                            })}
 
                             {/* </ul> */}
-                           
+
 
                         </div>
                     )
 
-                    
 
-            } 
-            {
-                props.currentCategory ?
-                (
-                    <div className="row">
-                    <NavLink to="/newQuestion">Add Question</NavLink> 
-                    </div>
-                ) :
-                (null)
 
             }
-         
-            
-           
+            {
+                Object.keys(props.currentCategory).length > 0 ?
+                    (
+                        <div className="row ">
+                            <div className='text-end'>
+                            <NavLink to="/newQuestion">Add Question</NavLink>
+                            </div>
+                        </div>
+                    ) :
+                    (null)
+
+            }
+
+
+
+
+
+
 
         </div>
 

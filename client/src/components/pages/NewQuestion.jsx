@@ -1,12 +1,11 @@
 import SideNavigation from "./SideNav";
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {getLocalUserData} from '../utility.js';
 
 
 function NewQuestion(props) {
     const [newQuestionData, setNewQuestionData] = useState("");
-    const [questionAnswers, setQuestionAnswers] = useState({});
     const navigate = useNavigate();
 
     function getQuestionInputData(e) {
@@ -28,7 +27,6 @@ function NewQuestion(props) {
         })
             .then((res) => res.json())
              .then(navigate('/', {replace: true}), [navigate])
-           // .then(props.handleClick(props.currentCategoryID, props.currentCategoryName))
             .catch((err) => console.log('error'));
     }
     };
@@ -40,21 +38,18 @@ function NewQuestion(props) {
     return (
 
         <div className="container-fluid">
-
-            <div className="row">
-              
+            <div className="row">     
             <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
-            
-                <div className="col">
-                  
-                    <div className="row">
+                <div className="col g-3 border border-secondary rounded p-1">
+                    <div className="row ">
+                    <h5 className='text-center'> Category-{props.currentCategory.name}</h5>
                          <form onSubmit={getQuestionInputData}>
-
-                            <div className="form-group">
-                                <label htmlFor="newQuestion">{props.currentCategory.name}</label>
+                            <div className="form-group mt-3 mb-2">
                                 <textarea className="form-control" name="newQuestion" value={newQuestionData} placeholder="Question" aria-label="Question" onChange={handleAddQuestion} rows="3"></textarea>
                             </div>
-                            <button type="submit">Add Question</button>
+                            <div className='text-end'>
+                            <button type="submit"  className="btn btn-secondary ">Add Question</button>
+                            </div>
                         </form> 
                     </div>
                 </div>
@@ -63,7 +58,5 @@ function NewQuestion(props) {
 
     )
 
-
 }
-
 export default NewQuestion;

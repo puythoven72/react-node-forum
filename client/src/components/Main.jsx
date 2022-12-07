@@ -24,6 +24,7 @@ function Main(props) {
     const [regPassword, setRegPassword] = useState('');
 
     const loggedInUserData = localStorage.getItem("userData");
+    
     alert(loggedInUserData);
 
     // if (JSON.stringify(props.userData).length === 0) {
@@ -92,7 +93,7 @@ function Main(props) {
 
                 <>
                     <Routes>
-                        <Route path="/" element={<Login setUserData={props.setUserData} userData={props.userData} />} />
+                        <Route path="/" element={<Login  />} />
                         <Route path="/register" element={<Register regPassword={regPassword} setRegPassword={setRegPassword} regUserName={regUserName} setRegUserName={setRegUserName} setRegLastName={setRegLastName} setRegFirstName={setRegFirstName} regFirstName={regFirstName} regLastName={regLastName} />} />
                         {/* <Route path="/Login" element={ <Login userName={userName} password = {password}  setUserName = {setUserName} setPassword={setPassword} />} /> */}
                     </Routes>
