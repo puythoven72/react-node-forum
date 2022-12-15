@@ -169,7 +169,7 @@ app.post('/addAnswer', async function (req, res) {
 
 
 app.post('/', async function (req, res) {
-  console.log("IS THIS RUNNING TO?");
+
   try {
     let userName = req.body.userName;
     let password = req.body.password;
@@ -177,11 +177,11 @@ app.post('/', async function (req, res) {
     let userData = await getUserLogin(userName, password);
     
     if(userData.length > 0){
-      console.log("really gunna do it");
+    
       res.send({ userData });
     }
      else{
-       console.log("not gunna do it");
+     
        res.send({ message: "User name or password not found" });
     }
   } catch (err) {

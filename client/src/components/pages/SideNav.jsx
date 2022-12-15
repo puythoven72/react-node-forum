@@ -1,30 +1,25 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getLocalUserData } from '../utility.js';
 
 function SideNavigation(props) {
 
   const [backEndData, setBackEndData] = useState({});
   const [newCategoryData, setNewCategoryData] = useState("");
-
-  const [currentCategoryName, setCurrentCategoryName] = useState('');
-
-  const [currentCategoryID, setCurrentCategoryID] = useState('');
-
   const [addedCategory, setAddedCategory] = useState('');
   const navigate = useNavigate();
 
 
   useEffect(() => { getCategories() }, [addedCategory, newCategoryData]);
 
-  // const loggedInUserData = localStorage.getItem("userData");
 
-
-  async function getCategories() {
+  async function getCategories() {alert("running again");
     await fetch("/api")
       .then(response => response.json())
-      .then(data => { setBackEndData(data) })
-
+      .then(data => { setBackEndData(data)}
+      
+      )
+      .catch((err) => console.log(err));
   }
 
 
@@ -33,7 +28,7 @@ function SideNavigation(props) {
 
   };
 
-  function getCategoryInputData(e) {
+  async function  getCategoryInputData(e) {
     e.preventDefault();
     let userId = null;
     let userStoredData = getLocalUserData();
@@ -42,7 +37,7 @@ function SideNavigation(props) {
       userId = userStoredData.id;
 
 
-      fetch('/addCatagories', {
+     await fetch('/addCatagories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,18 +59,9 @@ function SideNavigation(props) {
 
   //const handleClick = async (id, name) => {
   const handleClick = (category) => {
-    alert("in " + category)
     try {
       props.setCurrentCategory(category);
       navigate('/');
-      // await fetch(`getQuestions?id=${category.id}`)
-      //   .then(response => response.json())
-      //   // .then(data => { setAllQuestionByCategory(data) })
-      //   .then(data => { props.setAllQuestionByCategory(data) })
-      //   .then(navigate('/', { replace: true }), [navigate])
-      //   .then(myJson => {
-
-      //   });
 
     } catch (err) {
       console.log(err.message)
@@ -109,33 +95,24 @@ function SideNavigation(props) {
         </div>
 
       </form>
-
-
-
-
       <div className="list-group mt-2 border border-secondary rounded p-0">
 
         {
-          (Object.keys(backEndData).length === 0) ? (<p>Loading....</p>) :
+          (Object.keys(backEndData).length === 0) ? (<p >Add A Category</p>) :
             (
 
               backEndData.map(function (category, index) {
 
-                return (<div>
-                  {/* <li className="list-group-item" key={category.id}><a href='#' onClick={() => handleClick(category)}>{category.name}</a></li> */}
-                  {/* <button type="button" className="list-group-item list-group-item-action" onClick={() => handleClick(category)}>A second item</button> */}
-
-                  <button type='button' className="list-group-item list-group-item-action list-group-item-primary" onClick={() => handleClick(category)} key={category.id}>{category.name} </button>
+                return (
+                <div key={category.id}>
+                    <button type='button' className="list-group-item list-group-item-action list-group-item-primary" onClick={() => handleClick(category)}>{category.name} </button>
                 </div>
                 )
               })
             )
         }
-
       </div>
-
     </div>
-
 
   )
 

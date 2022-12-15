@@ -8,13 +8,13 @@ function NewAnswer(props) {
     const navigate = useNavigate();
 
 
-    function postAnswerInputData(e) {
+   async function postAnswerInputData(e) {
         e.preventDefault();
         let userStoredData = getLocalUserData();
         if (userStoredData !== null && newAnswerData !== '') {
             let userId = userStoredData.id;
 
-            fetch('/addAnswer', {
+        await    fetch('/addAnswer', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ function NewAnswer(props) {
                         <form onSubmit={postAnswerInputData}>
                             <h5 className='text-center'> Question-{props.currentQuestion.question}</h5>
                             <div className="form-group">
-                                <label htmlFor="newAnswer">{props.currentQuestion.question}</label>
+                                
                                 <textarea className="form-control" name="newAnswer" value={newAnswerData} placeholder="Answer" aria-label="Answer" onChange={handleAddAnswer} rows="3"></textarea>
                             </div>
                             <div className='text-end'>

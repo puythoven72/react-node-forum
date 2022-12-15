@@ -2,10 +2,6 @@ import { NavLink } from "react-router-dom";
 import { formatDate } from "./utility";
 
 function Question(props) {
-    //console.log(props);
-
-
-    let questionString = props.questionObj.question;
     let questionObj = props.questionObj
 
     let questionDte = formatDate(props.questionObj.created);
@@ -13,11 +9,6 @@ function Question(props) {
 
     return (
       
-
-
-
-
-
             <div className="card">
                 <div className="card-header bg-secondary text-white">
                     <div>Asked By: {props.questionObj.firstname} {props.questionObj.lastname}</div>
@@ -27,7 +18,6 @@ function Question(props) {
                     <p className="card-text small">On: {questionDte}</p>
                 </div>
             </div>
-
       
     )
 

@@ -9,10 +9,18 @@ function Content(props) {
     const [allQuestionsByCategory, setAllQuestionByCategory] = useState({});
 
     useEffect(async function () {
+        alert(props.currentCategory.id);
         await fetch(`getQuestions?id=${props.currentCategory.id}`)
             .then(response => response.json())
-            .then(data => { setAllQuestionByCategory(data) })
+            .then(data => { setAllQuestionByCategory(data) }).catch((err) => console.log(err));
+            
     }, [props.currentCategory]);
+
+    // useEffect(async function () {
+    //     await fetch(`getQuestions?id=${props.currentCategory.id}`)
+    //         .then(response => response.json())
+    //         .then(data => { setAllQuestionByCategory(data) })
+    // }, []);
 
     return (
 
@@ -27,18 +35,23 @@ function Content(props) {
                             {/* <ul> */}
                             {allQuestionsByCategory.map(function (question, index) {
 
-                                return (<Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />)
+                                return (
+
+                                    <div key={question.id} >
+                                        <Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />
+                                    </div>
+                                )
+
+
+
                                 //   return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
 
                             })}
 
                             {/* </ul> */}
 
-
                         </div>
                     )
-
-
 
             }
             {
@@ -46,7 +59,7 @@ function Content(props) {
                     (
                         <div className="row ">
                             <div className='text-end'>
-                            <NavLink to="/newQuestion">Add Question</NavLink>
+                                <NavLink to="/newQuestion">Add Question</NavLink>
                             </div>
                         </div>
                     ) :

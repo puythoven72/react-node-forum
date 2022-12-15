@@ -2,6 +2,8 @@
   text-align: center;
 }
 
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,7 +14,7 @@
 }
 
 
-/* Login page} */
+/* Login page/register page} */
 
 .log-container{
   height: 100%;
@@ -36,7 +38,7 @@
   box-shadow: 0px 0px 5px 2px black;
 }
 
-#login-error-msg-holder {
+.login-error-msg-holder {
   width: 100%;
   height: 100%;
   display: grid;
@@ -44,7 +46,7 @@
   align-items: center;
 }
 
-#login-error-msg {
+.login-error-msg {
   width: 23%;
   text-align: center;
   margin: 0;
@@ -55,6 +57,19 @@
   border: 1px solid #8a0000;
   background-color: #e58f8f;
   opacity: 0;
+}
+
+.login-error-msg1 {
+  width: 23%;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+
+  
+ 
 }
 
 #error-msg-second-line {

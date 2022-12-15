@@ -8,13 +8,13 @@ function NewQuestion(props) {
     const [newQuestionData, setNewQuestionData] = useState("");
     const navigate = useNavigate();
 
-    function getQuestionInputData(e) {
+ async   function getQuestionInputData(e) {
         e.preventDefault()
         let userStoredData = getLocalUserData();
         if (userStoredData !== null  && newQuestionData !=='' ) {
            let userId = userStoredData.id;
 
-        fetch('/addQuestion', {
+      await  fetch('/addQuestion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ function NewQuestion(props) {
             }),
         })
             .then((res) => res.json())
-             .then(navigate('/', {replace: true}), [navigate])
+             .then(navigate('/'))
             .catch((err) => console.log('error'));
     }
     };
