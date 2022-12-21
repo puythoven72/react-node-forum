@@ -4,22 +4,26 @@ import { getLocalUserData } from '../utility.js';
 
 function SideNavigation(props) {
 
-  const [backEndData, setBackEndData] = useState({});
+  // const [backEndData, setBackEndData] = useState({});
   const [newCategoryData, setNewCategoryData] = useState("");
   const [addedCategory, setAddedCategory] = useState('');
+  const [addCat, setAddCat] = useState(false);
   const navigate = useNavigate();
 
 
-  useEffect(() => { getCategories() }, [addedCategory, newCategoryData]);
+  useEffect(() => { if (Object.keys(props.backEndData).length === 0 ) { getCategories() } }, [addedCategory]);
 
 
-  async function getCategories() {alert("running again");
+  async function getCategories() {
     await fetch("/api")
       .then(response => response.json())
-      .then(data => { setBackEndData(data)}
-      
+      .then(data => { props.setBackEndData(data) }
+
       )
       .catch((err) => console.log(err));
+
+      setAddCat(false);
+      setAddedCategory('');
   }
 
 
@@ -28,7 +32,7 @@ function SideNavigation(props) {
 
   };
 
-  async function  getCategoryInputData(e) {
+  async function getCategoryInputData(e) {
     e.preventDefault();
     let userId = null;
     let userStoredData = getLocalUserData();
@@ -37,7 +41,7 @@ function SideNavigation(props) {
       userId = userStoredData.id;
 
 
-     await fetch('/addCatagories', {
+      await fetch('/addCatagories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,15 +53,16 @@ function SideNavigation(props) {
       })
         .then((res) => res.json())
         .then(setAddedCategory(newCategoryData))
-        .then(getCategories())
+         .then(  getCategories())
+        //.then(setAddCat(true))
         .then(setNewCategoryData(''))
         // .then((result) => setData(result.rows))
-        .catch((err) => console.log('error'));
+        .catch((err) => console.log(err));
 
     }
+    setAddCat(true);
   };
 
-  //const handleClick = async (id, name) => {
   const handleClick = (category) => {
     try {
       props.setCurrentCategory(category);
@@ -67,11 +72,6 @@ function SideNavigation(props) {
       console.log(err.message)
     }
   };
-
-
-
-
-
 
 
   return (
@@ -98,15 +98,15 @@ function SideNavigation(props) {
       <div className="list-group mt-2 border border-secondary rounded p-0">
 
         {
-          (Object.keys(backEndData).length === 0) ? (<p >Add A Category</p>) :
+          (Object.keys(props.backEndData).length === 0) ? (<p >Add A Category</p>) :
             (
 
-              backEndData.map(function (category, index) {
+              props.backEndData.map(function (category, index) {
 
                 return (
-                <div key={category.id}>
+                  <div key={category.id}>
                     <button type='button' className="list-group-item list-group-item-action list-group-item-primary" onClick={() => handleClick(category)}>{category.name} </button>
-                </div>
+                  </div>
                 )
               })
             )

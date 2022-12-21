@@ -42,7 +42,7 @@ function Header() {
                             <a className="nav-link" href="#">Pricing</a>
                         </li>
                     </ul>
-                    <span className="navbar-text" id="logout">
+                    <span className="navbar-text d-flex justify-content-end" id="logout">
                         Welcome {userFullName}
                         <div className='text-end'><a href="/" onClick={logout}>Logout</a></div>
                     </span>

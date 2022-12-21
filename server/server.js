@@ -102,9 +102,11 @@ app.post('/addCatagories', async function (req, res) {
     let userID = parseInt(req.body.userID);
 
     if (!isStringValid(3, newCategory)) {
-      res.send({ message: "Category must be at least 3 characters." });
+     // res.send({ message: "Category must be at least 3 characters." });
+      res.status(401).json({ message: "Category must be at least 3 characters." })
     } else {
       const categories = await createCategory(newCategory, userID);
+      res.status(201).json({ "status": true, "result": "Request Success!" })
 
     }
   } catch (err) {
@@ -133,9 +135,12 @@ app.post('/addQuestion', async function (req, res) {
     let categoryID = req.body.categoryID;
     let createrID = parseInt(req.body.userID);
     const question = await createQuestion(newQuestion, categoryID, createrID);
-
+    //res.status(201).send();
+    res.status(201).json({ "status": true, "result": "Request Success!" })
   } catch (err) {
-    res.json(err.message);
+ //   res.json(err.message);
+ console.log('question not added because '+ err)
+    res.status(500).json({ "status": false, "result": "Request Failed " + err })
   }
 
 });
@@ -161,8 +166,12 @@ app.post('/addAnswer', async function (req, res) {
     let create = parseInt(req.body.userID);
 
     const addAnswer = await createAnswer(newAnswer, categoryID, questionID, create);
+    // res.status(201).send();
+    res.status(201).json({ "status": true, "result": "Request Success!" })
   } catch (err) {
-    res.json(err.message);
+    //res.json(err.message);
+    console.log('error Adding  Answer' + err)
+    res.status(500).json({ "status": false, "result": "Request Failed because of " + err })
   }
 });
 
@@ -175,16 +184,16 @@ app.post('/', async function (req, res) {
     let password = req.body.password;
 
     let userData = await getUserLogin(userName, password);
-    
-    if(userData.length > 0){
-    
+
+    if (userData.length > 0) {
+
       res.send({ userData });
     }
-     else{
-     
-       res.send({ message: "User name or password not found" });
+    else {
+
+      res.send({ message: "User name or password not found" });
     }
   } catch (err) {
-   res.json(err.message + "error");
+    res.json(err.message + "error");
   }
 })

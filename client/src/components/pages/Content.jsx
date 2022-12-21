@@ -8,19 +8,39 @@ function Content(props) {
 
     const [allQuestionsByCategory, setAllQuestionByCategory] = useState({});
 
-    useEffect(async function () {
-        alert(props.currentCategory.id);
-        await fetch(`getQuestions?id=${props.currentCategory.id}`)
-            .then(response => response.json())
-            .then(data => { setAllQuestionByCategory(data) }).catch((err) => console.log(err));
-            
-    }, [props.currentCategory]);
-
     // useEffect(async function () {
+    //     alert(props.currentCategory.id);
     //     await fetch(`getQuestions?id=${props.currentCategory.id}`)
     //         .then(response => response.json())
-    //         .then(data => { setAllQuestionByCategory(data) })
-    // }, []);
+    //         .then(data => { setAllQuestionByCategory(data) }).catch((err) => console.log(err));
+    // }, [props.currentCategory]);
+
+    useEffect(() => {
+        async function fetchData() {
+            await fetch(`getQuestions?id=${props.currentCategory.id}`)
+            .then(response => response.json())
+            .then(data => { setAllQuestionByCategory(data) }).catch((err) => console.log(err));
+        }
+        fetchData();
+      }, [props.currentCategory]);
+
+
+
+
+    //  useEffect(async function () {
+    //      await fetch(`getQuestions?id=${props.currentCategory.id}`)
+    //          .then(response => response.json())
+    //          .then(data => { setAllQuestionByCategory(data) })
+    //  }, []);
+
+     useEffect(() => {
+        async function fetchData() {
+            await fetch(`getQuestions?id=${props.currentCategory.id}`)
+            .then(response => response.json())
+            .then(data => { setAllQuestionByCategory(data) })
+        }
+        fetchData();
+      }, []);
 
     return (
 
@@ -32,23 +52,18 @@ function Content(props) {
                     (
                         <div>
                             <h5 className='text-center'> Current Category-{props.currentCategory.name}</h5>
-                            {/* <ul> */}
+
                             {allQuestionsByCategory.map(function (question, index) {
 
                                 return (
 
                                     <div key={question.id} >
-                                        <Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} />
+                                        <Question questionObj={question} setCurrentQuestion={props.setCurrentQuestion} currentQuestion={props.currentQuestion} backEndData={props.backEndData} setBackEndData={props.setBackEndData} />
                                     </div>
                                 )
 
-
-
-                                //   return <li>  <NavLink to="/answers" state ={ { questionObj:{question}  }}>{questionString}</NavLink></li>
-
                             })}
 
-                            {/* </ul> */}
 
                         </div>
                     )
@@ -66,12 +81,6 @@ function Content(props) {
                     (null)
 
             }
-
-
-
-
-
-
 
         </div>
 

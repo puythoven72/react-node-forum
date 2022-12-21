@@ -5,7 +5,7 @@ import SideNavigation from  './SideNav';
 
  function Home(props) {
 
-const loggedInUserData = localStorage.getItem("userData");
+//const loggedInUserData = localStorage.getItem("userData");
 
 
 
@@ -15,7 +15,7 @@ const loggedInUserData = localStorage.getItem("userData");
         <div className="container-fluid">
             
         <div className="row">
-           <SideNavigation  currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
+           <SideNavigation backEndData={props.backEndData} setBackEndData={props.setBackEndData} currentCategory ={props.currentCategory} setCurrentCategory={props.setCurrentCategory} /> 
             <Content currentCategory ={props.currentCategory}   currentQuestion={props.currentQuestion} /> 
            
         </div>

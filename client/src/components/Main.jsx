@@ -21,6 +21,8 @@ function Main(props) {
     const [regUserName, setRegUserName] = useState('');
     const [regPassword, setRegPassword] = useState('');
     const loggedInUserData = localStorage.getItem("userData");
+
+    const [backEndData, setBackEndData] = useState({});
     
   
     return (
@@ -43,10 +45,10 @@ function Main(props) {
 
                         <Routes>
                            
-                            <Route path="/" element={<Home currentCategory={currentCategory} setCurrentCategory={setCurrentCategory} userData={props.userData} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} />} />
-                            <Route path="/newQuestion" element={<NewQuestion setCurrentCategory={setCurrentCategory} currentCategory={currentCategory} userData={props.userData} />} /> 
-                            <Route path="/answers" element={<Answers setCurrentCategory={setCurrentCategory} currentCategory={currentCategory} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} setCurrentAnswer={setCurrentAnswer} currentAnswer={currentAnswer} />} />
-                            <Route path="/newAnswers" element={<NewAnswer setCurrentCategory={setCurrentCategory} currentQuestion={currentQuestion} />} />
+                            <Route path="/" element={<Home backEndData={backEndData} setBackEndData={setBackEndData} currentCategory={currentCategory} setCurrentCategory={setCurrentCategory} userData={props.userData} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} />} />
+                            <Route path="/newQuestion" element={<NewQuestion  backEndData={backEndData} setBackEndData={setBackEndData} setCurrentCategory={setCurrentCategory} currentCategory={currentCategory} userData={props.userData} />} /> 
+                            <Route path="/answers" element={<Answers backEndData={backEndData} setBackEndData={setBackEndData} setCurrentCategory={setCurrentCategory} currentCategory={currentCategory} setCurrentQuestion={setCurrentQuestion} currentQuestion={currentQuestion} setCurrentAnswer={setCurrentAnswer} currentAnswer={currentAnswer} />} />
+                            <Route path="/newAnswers" element={<NewAnswer backEndData={backEndData} setBackEndData={setBackEndData} setCurrentCategory={setCurrentCategory} currentQuestion={currentQuestion} />} />
                         </Routes>
                     </div>
                 </div>
