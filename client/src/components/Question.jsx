@@ -3,7 +3,6 @@ import { formatDate } from "./utility";
 
 function Question(props) {
     let questionObj = props.questionObj
-
     let questionDte = formatDate(props.questionObj.created);
 
 

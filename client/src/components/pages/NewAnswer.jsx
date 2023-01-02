@@ -45,7 +45,7 @@ function NewAnswer(props) {
 
             <div className="row">
                 <SideNavigation backEndData={props.backEndData} setBackEndData={props.setBackEndData} currentCategory={props.currentCategory} setCurrentCategory={props.setCurrentCategory} />
-                <div className="col col g-3 border border-secondary rounded p-1">
+                <div className="col-9 col g-3 border border-secondary rounded p-1">
                     <div className="row">
                         <form onSubmit={postAnswerInputData}>
                             <h5 className='text-center'> Question-{props.currentQuestion.question}</h5>

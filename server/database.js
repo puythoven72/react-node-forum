@@ -59,7 +59,7 @@ export async function createAnswer(answer,categoryID,questionID,createID) {
 
 export async function checkUserName(username) {
     const [result] = await pool.query(`SELECT username FROM users Where username  = ?`,[username]); 
-    console.log(result);
+   
     if(result.length > 0){
         return true;
     }
@@ -75,7 +75,7 @@ export async function registerUser(username,password,firstname,lastname) {
 
 export async function getUserLogin(username,password) {
     const [result] = await pool.query(`SELECT id,username,firstName,lastName FROM users Where username  = ?  and BINARY password = ?`,[username,password]);  
-    console.log(result);
+  
     if(result){
         return result;
     }
@@ -84,10 +84,3 @@ export async function getUserLogin(username,password) {
 };
 
 
-
-
-
-
-// Insert into forum.answer (answer,category,question,createdby) values ("answer Test",1,2,15);
-//const categories = await createCategory("cat",2);
-//console.log(categories);

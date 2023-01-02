@@ -1,15 +1,10 @@
-import Header from './Header';
+
 import Content from './Content';
 import SideNavigation from  './SideNav';
 
 
  function Home(props) {
 
-//const loggedInUserData = localStorage.getItem("userData");
-
-
-
-   
     return (
        
         <div className="container-fluid">

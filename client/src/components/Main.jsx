@@ -1,5 +1,4 @@
 
-//import './App.css';
 import {  useState } from 'react';
 
 import Home from './pages/Home';
@@ -20,8 +19,8 @@ function Main(props) {
     const [regFirstName, setRegFirstName] = useState('');
     const [regUserName, setRegUserName] = useState('');
     const [regPassword, setRegPassword] = useState('');
+    const [regPasswordCheck, setRegPasswordCheck] = useState('');
     const loggedInUserData = localStorage.getItem("userData");
-
     const [backEndData, setBackEndData] = useState({});
     
   
@@ -35,7 +34,7 @@ function Main(props) {
                 <>
                     <Routes>
                         <Route path="/" element={<Login  />} />
-                        <Route path="/register" element={<Register regPassword={regPassword} setRegPassword={setRegPassword} regUserName={regUserName} setRegUserName={setRegUserName} setRegLastName={setRegLastName} setRegFirstName={setRegFirstName} regFirstName={regFirstName} regLastName={regLastName} />} />
+                        <Route path="/register" element={<Register regPassword={regPassword} setRegPassword={setRegPassword} regUserName={regUserName} setRegUserName={setRegUserName} setRegLastName={setRegLastName} setRegFirstName={setRegFirstName} regFirstName={regFirstName} regLastName={regLastName} regPasswordCheck = {regPasswordCheck} setRegPasswordCheck ={setRegPasswordCheck}/>} />
                     </Routes>
 
                 </>

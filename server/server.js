@@ -1,10 +1,9 @@
-//const express = require('express');
+
 import express from 'express';
 const app = express();
 import bodyParser from 'body-parser';
-// var mysql = require('mysql');
 const port = 5000;
-import cors from 'cors';
+
 
 
 import { getCategories, getCategory, createCategory, getQuestionsByCategory, createQuestion, getAnswersByQuestion, createAnswer, checkUserName, registerUser, getUserLogin } from './database.js'
@@ -16,10 +15,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-
-//app.use(cors()) //and this
-
 
 
 
@@ -34,24 +29,27 @@ app.post('/registerUser', async function (req, res) {
     let password = req.body.regpassword;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
-
-
+    let passwordCheck = req.body.regpasswordcheck;
+ 
     if (!isStringValid(5, newUserName)) {
-      res.send({ message: "User must be at least 5 characters" });
+      res.send({id: 1, message: "User must be at least 5 characters" });
     } else if (!isStringValid(5, password)) {
-      res.send({ message: "Password must be at least 5 characters" });
+      res.send({id: 2, message: "Password must be at least 5 characters" });
     } else if (!isStringValid(3, firstName)) {
-      res.send({ message: "First Name must be at least 3 characters" });
+      res.send({id: 3, message: "First Name must be at least 3 characters" });
     } else if (!isStringValid(3, lastName)) {
-      res.send({ message: "Last Name must be at least 3 characters" });
+      res.send({id: 4, message: "Last Name must be at least 3 characters" });
+    }
+    else if ( password !== passwordCheck) {
+      res.send({id: 2, message: "Passwords must match" });
     }
     else if (await checkUserName(newUserName)) {
-      res.send({ message: "User Name Already Exists" });
+      res.send({ id: 1,message: "User Name Already Exists" });
     }
     else {
       let register = await registerUser(newUserName, password, firstName, lastName);
       if (register.insertId) {
-        res.send({ message: "Registration Success" });
+        res.send({id: 100, message: "Registration Success" });
       } else {
 
       }
@@ -60,25 +58,6 @@ app.post('/registerUser', async function (req, res) {
     res.json(err.message);
   }
 });
-
-// app.post('/loginUser', async function (req, res) {
-//   try {
-//     let userName = req.body.userName;
-//     let password = req.body.password;
-
-//     let userData = await getUserLogin(userName, password)
-//     console.log("ddd" + userData + " from server");
-//     if(userData.length > 0){
-//       console.log("really gunna do it");
-//       res.send({ userData });
-//     }else{
-//       console.log("not gunna do it");
-//       res.send({ message: "User name or password not found" });
-//     }
-//   } catch (err) {
-//     res.json(err.message);
-//   }
-// })
 
 
 
@@ -102,7 +81,6 @@ app.post('/addCatagories', async function (req, res) {
     let userID = parseInt(req.body.userID);
 
     if (!isStringValid(3, newCategory)) {
-     // res.send({ message: "Category must be at least 3 characters." });
       res.status(401).json({ message: "Category must be at least 3 characters." })
     } else {
       const categories = await createCategory(newCategory, userID);

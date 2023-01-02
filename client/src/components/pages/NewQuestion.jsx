@@ -35,7 +35,6 @@ function NewQuestion(props) {
     function handleAddQuestion(e) {
         setNewQuestionData(e.target.value);
         setQuestionCharCount(e.target.value.length);
-       console.log(questionCharCount + ' count ');
         
     };
 
@@ -44,7 +43,7 @@ function NewQuestion(props) {
         <div className="container">
             <div className="row">
                 <SideNavigation backEndData={props.backEndData} setBackEndData={props.setBackEndData} currentCategory={props.currentCategory} setCurrentCategory={props.setCurrentCategory} />
-                <div className="col g-3 border border-secondary rounded p-1">
+                <div className="col-9 g-3 border border-secondary rounded p-1">
                     <div className="row ">
                         <h5 className='text-center'> Category-{props.currentCategory.name}</h5>
                         <form onSubmit={getQuestionInputData} >

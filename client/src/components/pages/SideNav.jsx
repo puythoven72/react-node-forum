@@ -4,7 +4,6 @@ import { getLocalUserData } from '../utility.js';
 
 function SideNavigation(props) {
 
-  // const [backEndData, setBackEndData] = useState({});
   const [newCategoryData, setNewCategoryData] = useState("");
   const [addedCategory, setAddedCategory] = useState('');
   const [addCat, setAddCat] = useState(false);

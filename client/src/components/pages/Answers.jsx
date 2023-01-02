@@ -37,7 +37,7 @@ function Answers(props) {
         <div className='container'>
             <div className='row ' >
                 <SideNavigation backEndData={props.backEndData} setBackEndData={props.setBackEndData} currentCategory={props.currentCategory} setCurrentCategory={props.setCurrentCategory} />
-                <div className="col g-3 border border-secondary rounded p-1">
+                <div className="col-9  g-3 border border-secondary rounded p-1">
                     <h5 className='text-center'> Question-{props.currentQuestion.question}</h5>
                     {
                         (Object.keys(answerData).length === 0) ? (
